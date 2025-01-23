@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AddTopicDto {
+public class VoteSubmitDto {
 
-    private String title;
-    private String description;
+    private Long topicId;
+    private Boolean isLike;
 }

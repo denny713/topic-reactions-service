@@ -2,7 +2,7 @@ package com.reaction.topic.service.impl;
 
 import com.reaction.topic.exception.BadRequestException;
 import com.reaction.topic.exception.ServiceException;
-import com.reaction.topic.model.dto.request.AddTopicDto;
+import com.reaction.topic.model.dto.request.TopicSubmitDto;
 import com.reaction.topic.model.dto.response.ResponseDto;
 import com.reaction.topic.model.entity.Topic;
 import com.reaction.topic.repository.TopicRepository;
@@ -21,7 +21,7 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     @Transactional
-    public ResponseDto doSubmitTopic(AddTopicDto topic) {
+    public ResponseDto doSubmitTopic(TopicSubmitDto topic) {
 
         if (StringUtils.isEmpty(topic.getTitle())) {
             throw new BadRequestException("Title cannot be null or empty");
