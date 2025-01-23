@@ -34,7 +34,7 @@ public class EncryptUtil implements PasswordEncoder {
             for (byte byt : bytes) {
                 str.append(Integer.toString((byt & 0xff) + 0x100, 16).substring(1));
             }
-            return str.toString().toUpperCase();
+            return str.toString();
         } catch (NoSuchAlgorithmException ex) {
             log.error(ex.getMessage());
             return null;

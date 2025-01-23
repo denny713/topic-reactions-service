@@ -3,6 +3,7 @@ package com.reaction.topic.token;
 import com.google.gson.Gson;
 import com.reaction.topic.config.UrlWhitelistConfig;
 import com.reaction.topic.model.dto.response.ResponseDto;
+import com.reaction.topic.util.TokenUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -49,7 +50,7 @@ public class JwtFilter extends OncePerRequestFilter {
                                     @NonNull FilterChain filterChain)
             throws ServletException, IOException {
         try {
-            String token = "";
+            String token = TokenUtil.getTokenFromHeader(request);
             String username = jwtService.getUsername(token);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
