@@ -39,7 +39,8 @@ jwt:
   refresh-exp: 604800000
 url-whitelist:
   urls:
-    - /api/auth/login
+    - /auth/login
+    - /account
     - /v2/api-docs
     - /configuration/
     - /swagger-resources/**
@@ -49,5 +50,3 @@ url-whitelist:
     - /swagger-ui/**
     - /v3/api-docs/**
     - /error
-    - /login
-    - /assets/**
