@@ -1,5 +1,6 @@
 package com.reaction.topic.model.entity.base;
 
+import com.reaction.topic.util.AccountUtil;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +22,7 @@ public abstract class BaseEntity implements Serializable {
 
     @PrePersist
     protected void onCreate() {
-        this.setCreatedBy("System");
+        this.setCreatedBy(AccountUtil.getCurrentAccountEmail());
         this.setCreatedDate(LocalDateTime.now());
     }
 }

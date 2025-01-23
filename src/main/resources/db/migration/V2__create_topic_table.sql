@@ -1,0 +1,8 @@
+CREATE TABLE topic
+(
+    topic_id     SERIAL PRIMARY KEY,
+    title        VARCHAR(35) NOT NULL,
+    description  VARCHAR(255) NOT NULL,
+    created_by   VARCHAR(35) NOT NULL,
+    created_date TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

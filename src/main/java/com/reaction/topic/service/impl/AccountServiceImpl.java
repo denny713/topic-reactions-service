@@ -21,28 +21,28 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public ResponseDto doRegister(RegisterDto registerDto) {
+    public ResponseDto doRegister(RegisterDto account) {
 
-        if (StringUtils.isEmpty(registerDto.getName())) {
+        if (StringUtils.isEmpty(account.getName())) {
             throw new BadRequestException("Name cannot be null or empty");
         }
 
-        if (StringUtils.isEmpty(registerDto.getEmail())) {
+        if (StringUtils.isEmpty(account.getEmail())) {
             throw new BadRequestException("Email cannot be null or empty");
         }
 
-        if (StringUtils.isEmpty(registerDto.getPassword())) {
+        if (StringUtils.isEmpty(account.getPassword())) {
             throw new BadRequestException("Password cannot be null or empty");
         }
 
         try {
-            Account account = new Account();
-            account.setEmail(registerDto.getEmail());
-            account.setPassword(EncryptUtil.encrypt(registerDto.getPassword()));
-            account.setFullName(registerDto.getName());
-            accountRepository.save(account);
+            Account savedAccount = new Account();
+            savedAccount.setEmail(account.getEmail());
+            savedAccount.setPassword(EncryptUtil.encrypt(account.getPassword()));
+            savedAccount.setFullName(account.getName());
+            accountRepository.save(savedAccount);
 
-            return new ResponseDto(201, "Success", account);
+            return new ResponseDto(201, "Success", savedAccount);
         } catch (Exception e) {
             throw new SerializationException(e.getMessage());
         }

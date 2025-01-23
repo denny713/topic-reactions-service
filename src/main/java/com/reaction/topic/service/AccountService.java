@@ -5,5 +5,5 @@ import com.reaction.topic.model.dto.response.ResponseDto;
 
 public interface AccountService {
 
-    ResponseDto doRegister(RegisterDto registerDto);
+    ResponseDto doRegister(RegisterDto account);
 }
