@@ -2,6 +2,7 @@ package com.reaction.topic.service.impl;
 
 import com.reaction.topic.exception.BadRequestException;
 import com.reaction.topic.model.dto.request.RegisterDto;
+import com.reaction.topic.model.dto.response.AccountDto;
 import com.reaction.topic.model.dto.response.ResponseDto;
 import com.reaction.topic.model.entity.Account;
 import com.reaction.topic.repository.AccountRepository;
@@ -42,7 +43,11 @@ public class AccountServiceImpl implements AccountService {
             savedAccount.setFullName(account.getName());
             accountRepository.save(savedAccount);
 
-            return new ResponseDto(201, "Success", savedAccount);
+            return new ResponseDto(201, "Success", new AccountDto(
+                    savedAccount.getAccountId(),
+                    savedAccount.getEmail(),
+                    savedAccount.getFullName()
+            ));
         } catch (Exception e) {
             throw new SerializationException(e.getMessage());
         }
