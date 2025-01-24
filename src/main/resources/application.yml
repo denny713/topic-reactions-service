@@ -1,3 +1,48 @@
 spring:
+  application:
+    name: topic-reactions
+  datasource:
+    url: jdbc:postgresql://localhost:5432/topic-reaction?useTimezone=true&serverTimezone=UTC
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    clean-on-validation-error: true
+    locations: classpath:db/migration
   profiles:
     active: dev
+server:
+  port: 7373
+  servlet:
+    context-path: /api
+    session:
+      timeout: 60m
+  error:
+    whitelabel:
+      enabled: false
+    path: /error
+logging:
+  level:
+    org.springframework: DEBUG
+    org.thymeleaf: DEBUG
+  pattern:
+    console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %thread ${PID} [%X{correlationId}] %-5level %logger{36} - %class{1} - %msg%n"
+url-whitelist:
+  urls:
+    - /auth/login
+    - /account
+    - /v2/api-docs
+    - /configuration/
+    - /swagger-resources/**
+    - /configuration/security
+    - /swagger-ui.html
+    - /webjars/**
+    - /swagger-ui/**
+    - /v3/api-docs/**
+    - /error
