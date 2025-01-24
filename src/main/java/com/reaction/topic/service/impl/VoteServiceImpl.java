@@ -5,6 +5,7 @@ import com.reaction.topic.exception.ForbiddenException;
 import com.reaction.topic.exception.ServiceException;
 import com.reaction.topic.model.dto.request.VoteSubmitDto;
 import com.reaction.topic.model.dto.response.ResponseDto;
+import com.reaction.topic.model.dto.response.VoteDto;
 import com.reaction.topic.model.entity.Topic;
 import com.reaction.topic.model.entity.Vote;
 import com.reaction.topic.repository.TopicRepository;
@@ -67,9 +68,15 @@ public class VoteServiceImpl implements VoteService {
                 savedVote.setDislikeVote(false);
             }
 
-            voteRepository.save(savedVote);
+            savedVote = voteRepository.save(savedVote);
 
-            return new ResponseDto(201, "Success", savedVote);
+            return new ResponseDto(201, "Success", new VoteDto(
+                    savedVote.getVoteId(),
+                    topic.getTitle(),
+                    topic.getDescription(),
+                    savedVote.getLikeVote(),
+                    savedVote.getDislikeVote()
+            ));
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
         }

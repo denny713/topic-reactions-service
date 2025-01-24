@@ -9,13 +9,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TopicDto {
+public class VoteDto {
 
-    private Long topicId;
+    private Long voteId;
     private String title;
     private String description;
-    private String author;
-    private Long totalVote;
-    private Long likePercentage;
-    private Long dislikePercentage;
+    private Boolean likeVote;
+    private Boolean dislikeVote;
 }

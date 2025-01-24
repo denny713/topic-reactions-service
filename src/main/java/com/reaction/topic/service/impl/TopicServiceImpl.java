@@ -9,6 +9,7 @@ import com.reaction.topic.model.entity.Topic;
 import com.reaction.topic.model.entity.Vote;
 import com.reaction.topic.repository.TopicRepository;
 import com.reaction.topic.service.TopicService;
+import com.reaction.topic.util.NumberUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -41,7 +42,15 @@ public class TopicServiceImpl implements TopicService {
             BeanUtils.copyProperties(topic, savedTopic);
             topicRepository.save(savedTopic);
 
-            return new ResponseDto(201, "Success", savedTopic);
+            return new ResponseDto(201, "Success", new TopicDto(
+                    savedTopic.getTopicId(),
+                    savedTopic.getTitle(),
+                    savedTopic.getDescription(),
+                    savedTopic.getCreatedBy(),
+                    0L,
+                    0L,
+                    0L
+            ));
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
         }
@@ -54,15 +63,18 @@ public class TopicServiceImpl implements TopicService {
             List<Topic> topics = topicRepository.findAll();
             List<TopicDto> topicDtos = new ArrayList<>();
 
-            topics.forEach(it -> topicDtos.add(new TopicDto(
-                    it.getTopicId(),
-                    it.getTitle(),
-                    it.getDescription(),
-                    it.getCreatedBy(),
-                    it.getVotes().size(),
-                    (int) ((it.getVotes().stream().filter(Vote::getLikeVote).count() / it.getVotes().size()) * 100),
-                    (int) ((it.getVotes().stream().filter(Vote::getDislikeVote).count() / it.getVotes().size()) * 100)
-            )));
+            topics.forEach(it -> {
+                Long topicSize = (long) it.getVotes().size();
+                topicDtos.add(new TopicDto(
+                        it.getTopicId(),
+                        it.getTitle(),
+                        it.getDescription(),
+                        it.getCreatedBy(),
+                        topicSize,
+                        NumberUtil.calculatePercentage(topicSize, it.getVotes().stream().filter(Vote::getLikeVote).count()),
+                        NumberUtil.calculatePercentage(topicSize, it.getVotes().stream().filter(Vote::getDislikeVote).count())
+                ));
+            });
 
             return new ResponseDto(200, "Success", topicDtos);
         } catch (Exception e) {
