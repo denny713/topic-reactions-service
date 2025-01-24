@@ -15,8 +15,7 @@ spring:
     baseline-on-migrate: true
     clean-on-validation-error: true
     locations: classpath:db/migration
-  profiles:
-    active: dev
+
 server:
   port: 7373
   servlet:
@@ -33,6 +32,11 @@ logging:
     org.thymeleaf: DEBUG
   pattern:
     console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %thread ${PID} [%X{correlationId}] %-5level %logger{36} - %class{1} - %msg%n"
+jwt:
+  kid: 9a9f05d4-5ba8-47d4-a400-e838ab0b4306
+  secret: H5QLLJBD71MQYDF4UK096AAILETHJ2H9ZKHPQCBYKS63MYFYVRE2YMF6XESA42TS
+  access-exp: 86400000
+  refresh-exp: 604800000
 url-whitelist:
   urls:
     - /auth/login
