@@ -22,4 +22,9 @@ public class TopicController {
     public ResponseEntity<ResponseDto> createTopic(@Valid @RequestBody TopicSubmitDto topic) {
         return ResponseEntity.ok(topicService.doSubmitTopic(topic));
     }
+
+    @PostMapping("/list")
+    public ResponseEntity<ResponseDto> listTopic() {
+        return ResponseEntity.ok(topicService.doGetListTopic());
+    }
 }

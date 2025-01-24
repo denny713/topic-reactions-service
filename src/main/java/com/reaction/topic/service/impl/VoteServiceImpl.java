@@ -1,6 +1,7 @@
 package com.reaction.topic.service.impl;
 
 import com.reaction.topic.exception.BadRequestException;
+import com.reaction.topic.exception.ForbiddenException;
 import com.reaction.topic.exception.ServiceException;
 import com.reaction.topic.model.dto.request.VoteSubmitDto;
 import com.reaction.topic.model.dto.response.ResponseDto;
@@ -13,6 +14,8 @@ import com.reaction.topic.util.AccountUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +34,17 @@ public class VoteServiceImpl implements VoteService {
 
         if (vote.getIsLike() == null) {
             throw new BadRequestException("Like activity cannot be null or empty");
+        }
+
+        LocalDate today = LocalDate.now();
+        long voteToday = voteRepository.countByCreatedByAndCreatedDateBetween(
+                AccountUtil.getCurrentAccountEmail(),
+                today.atStartOfDay(),
+                today.atTime(23, 59, 59)
+        );
+
+        if (voteToday == 5) {
+            throw new ForbiddenException("You have reached the maximum number of rates for today");
         }
 
         Topic topic = topicRepository.findById(vote.getTopicId()).orElse(null);

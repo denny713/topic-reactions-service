@@ -4,6 +4,8 @@ import com.reaction.topic.model.entity.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
@@ -24,4 +26,7 @@ public class Topic extends BaseEntity {
 
     @Column(name = "description", nullable = false, length = 255)
     private String description;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "topic")
+    private List<Vote> votes;
 }
