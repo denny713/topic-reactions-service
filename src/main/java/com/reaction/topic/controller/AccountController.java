@@ -3,6 +3,7 @@ package com.reaction.topic.controller;
 import com.reaction.topic.model.dto.request.RegisterDto;
 import com.reaction.topic.model.dto.response.ResponseDto;
 import com.reaction.topic.service.AccountService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,5 +22,10 @@ public class AccountController {
     @PostMapping
     public ResponseEntity<ResponseDto> register(@Valid @RequestBody RegisterDto registerDto) {
         return ResponseEntity.ok(accountService.doRegister(registerDto));
+    }
+
+    @PostMapping("/me")
+    public ResponseEntity<ResponseDto> detail(HttpServletRequest request) {
+        return ResponseEntity.ok(accountService.detail(request));
     }
 }
